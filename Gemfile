@@ -53,4 +53,4 @@ end
 gem "active_model_serializers", "~> 0.10.12"
 
 # https://github.com/RolifyCommunity/rolify
-# gem "rolify"
+gem "rolify"
