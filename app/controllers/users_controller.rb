@@ -8,10 +8,6 @@ class UsersController < ApplicationController
     render json: User.all, status: :ok
   end
 
-  # # to see if it works
-  # def show 
-  #   render json: User.find(params[:id]), status: :found
-  # end
 
   # POST singup *works on postman  *** not working on react ***
   def create
@@ -28,6 +24,7 @@ class UsersController < ApplicationController
     # user = User.find_by(id: session[:user_id])
     # user.update(user_params)
     # render json: user, status: :created
+    current_user =  User.find_by(id: params[:id])
     render json: current_user.update(user_params)
   end
 
@@ -51,14 +48,21 @@ class UsersController < ApplicationController
     render json: orders
   end
 
-  def current_user
-    User.find_by(id: session[:user_id])
-  end
+# just for removing users with null data
+  # def destroy
+  #   product = User.find_by(id: params[:id])
+  #   product.delete
+  #   head :no_content
+  # end
+
+  # def current_user
+  #   User.find_by(id: session[:user_id])
+  # end
 
 
   private
 
   def user_params
-    params.permit(:name, :password, :email, :password_confirmation)
+    params.permit(:username, :password, :email, :password_confirmation)
   end
 end

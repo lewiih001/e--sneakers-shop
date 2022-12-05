@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   get "/sellers", to: "users#get_sellers"
   get "/getOrders", to: "users#get_orders"
 
+  delete "/users/:id", to: "users#destroy"
+
   # custom routes for sessions
   post "/signin", to: "sessions#create"
   delete "/signout", to: "sessions#destroy"
