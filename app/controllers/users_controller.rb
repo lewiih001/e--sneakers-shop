@@ -19,7 +19,7 @@ class UsersController < ApplicationController
     end
   end
 
-  # patch 
+  # PATCH/PUT
   def update
     # this gives an error [NoMethodError (undefined method `update' for nil:NilClass)]
     # user = User.find_by(id: session[:user_id])
