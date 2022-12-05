@@ -24,8 +24,8 @@ Rails.application.routes.draw do
   get "/myorders", to: "orders#user_orders"
 
   # custom routes for products
-  # get "/productsCategory/:category_id", to: "products#product_by_category"
-  # get "/userProducts/:user_id", to: "products#user_products"
+  get "/userProducts/:user_id", to: "products#user_products"
+  get "/productsCategory/:category_id", to: "products#product_by_category"
 
 
 

@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  skip_before_action :authorize, only: [:index, :show]
+  skip_before_action :authorize, only: [:index, :show, :user_products, :product_by_category]
   # GET /products
   def index 
     render json: Product.all, status: :ok
@@ -10,8 +10,21 @@ class ProductsController < ApplicationController
     render json: Product.find(params[:id]), status: :found
   end
 
+  # GET "/userProducts/:user_id"
+  def user_products
+    products = Product.where(user_id: params[:user_id]).to_a
+    render json: products
+  end
 
-  
+  # GET "/productsCategory/:category_id"
+  def product_by_category
+    if (params[:category_id].to_i == 0)
+      products = Product.all
+    else
+      products = Product.where(category_id: params[:category_id]).to_a
+    end
+    render json: products
+  end
 
   # POST /products --> 0nly by the seller <--
   def create 
@@ -37,7 +50,6 @@ class ProductsController < ApplicationController
     product.delete
     head :no_content
   end
-
 
   private
   def product_params
