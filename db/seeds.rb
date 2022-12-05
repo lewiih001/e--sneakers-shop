@@ -42,6 +42,6 @@ puts "creating orders...."
 order1 = Order.create(user_id: user1.id)
 
 puts "creating ordered items..."
-order_item1 = OrderItem.create(order_id: order1.id, product_id: product2.id, item_quantity: 34)
+order_item1 = OrderedItem.create(order_id: order1.id, product_id: product2.id, item_quantity: 34)
 
 puts "✅ Done seeding!"
