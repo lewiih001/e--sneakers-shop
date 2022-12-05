@@ -1,4 +1,5 @@
 class ProductsController < ApplicationController
+  skip_before_action :authorize, only: [:index, :show]
   # GET /products
   def index 
     render json: Product.all, status: :ok
@@ -9,23 +10,20 @@ class ProductsController < ApplicationController
     render json: Product.find(params[:id]), status: :found
   end
 
-  # POST /products
+
+  
+
+  # POST /products --> 0nly by the seller <--
   def create 
-    # ****< the below create doent work >***
-    # product = Product.new(product_params)
-    # if (product.save)
-    #   current_user = User.find(session[:user_id])
-    #   current_user.add_role(:seller) unless current_user.roles.any? {|role| role.name == "seller" }
-    # end
-    # render json: product, status: :created
-        # byebug
-        # have to use session
-        # ***** --> the below create works <----*** 
-        product = Product.create(product_params) 
-        render json: product, status: :created
+    product = Product.create(product_params)
+    if (product)
+      current_user = User.find(session[:user_id])
+      current_user.add_role(:seller) unless current_user.roles.any? {|role| role.name == "seller" }
+    end
+    render json: product, status: :created
   end
 
-  # UPDATE /products/:id
+  # UPDATE /products/:id --> 0nly by the seller <--
   def update
     # byebug
     product = Product.find_by(id: params[:id])
@@ -33,7 +31,7 @@ class ProductsController < ApplicationController
     render json: product
   end
 
-  # DELETE /products/:id
+  # DELETE /products/:id --> 0nly by the seller <--
   def destroy
     product = Product.find_by(id: params[:id])
     product.delete

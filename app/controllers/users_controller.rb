@@ -19,11 +19,14 @@ class UsersController < ApplicationController
     end
   end
 
-  # patch ** not working on postman
+  # patch 
   def update
+    # this gives an error [NoMethodError (undefined method `update' for nil:NilClass)]
     # user = User.find_by(id: session[:user_id])
     # user.update(user_params)
     # render json: user, status: :created
+
+    # this works & only password can be updated 
     current_user =  User.find_by(id: params[:id])
     render json: current_user.update(user_params)
   end
