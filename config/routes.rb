@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :cart_products, only: [:create, :destroy, :destroy_all]
+  resources :carts, only: [:index, :show]
   resources :ordered_items
   resources :orders, only: [:index]
   resources :categories, only: [:index]
@@ -7,7 +9,6 @@ Rails.application.routes.draw do
 
   #  custom routes for users
   post "/signup", to: "users#create"
-  # ------ **** the post above isnt working with the browser **** ------ #
 
   get "/me", to: "users#show"
   patch "/users/:id", to: "users#update"
@@ -26,6 +27,14 @@ Rails.application.routes.draw do
   # custom routes for products
   get "/userProducts/:user_id", to: "products#user_products"
   get "/productsCategory/:category_id", to: "products#product_by_category"
+
+  # custom routes for cart_products
+  post "/addtocart", to: "cart_products#create"
+  delete "/cart_products/:product_id", to: "cart_products#destroy"
+  delete "/clearCart", to: "cart_products#destroy_all"
+
+  # custom routes for cart
+  get "/myCart", to: "carts#current_cart"
 
 
 

@@ -10,7 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_05_070134) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_09_140832) do
+  create_table "cart_products", force: :cascade do |t|
+    t.integer "item_quantity"
+    t.integer "cart_id", null: false
+    t.integer "product_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cart_id"], name: "index_cart_products_on_cart_id"
+    t.index ["product_id"], name: "index_cart_products_on_product_id"
+  end
+
+  create_table "carts", force: :cascade do |t|
+    t.integer "total_amount"
+    t.integer "total_items"
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_carts_on_user_id"
+  end
+
   create_table "categories", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -76,6 +95,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_05_070134) do
     t.index ["user_id"], name: "index_users_roles_on_user_id"
   end
 
+  add_foreign_key "cart_products", "carts"
+  add_foreign_key "cart_products", "products"
+  add_foreign_key "carts", "users"
   add_foreign_key "ordered_items", "orders"
   add_foreign_key "ordered_items", "products"
   add_foreign_key "orders", "users"
